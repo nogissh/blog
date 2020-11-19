@@ -1,0 +1,35 @@
+{%- extends 'base.html' -%}
+
+{%- block title-%}nogisshのブログ{%- endblock -%}
+
+{%- block content -%}
+<div>
+    <div>
+        {%- for article in article_list -%}
+        <div class="section uk-padding-small uk-background-default uk-margin-bottom">
+            <p class="uk-text-right" style="margin: 0; font-size: 13px;">
+                投稿日: {{ article['formatted_created_at']}}
+            </p>
+
+            <h2 class="uk-text-lead uk-margin-small">
+                <a href="/articles/{{ article['id'] }}">
+                    {{ article['title'] }}
+                </a>
+            </h2>
+
+            <p>{{ article['description'] }}</p>
+
+            <div class="uk-text-center">
+                <p>
+                    <a href="/articles/{{ article['id'] }}">記事を読む</a>
+                </p>
+            </div>
+        </div>
+        {%- endfor -%}
+    </div>
+
+    <div class="uk-margin-top uk-text-center">
+        <a href="/search.html" class="uk-button uk-button-default">過去の記事を探す</a>
+    </div>
+</div>
+{%- endblock -%}

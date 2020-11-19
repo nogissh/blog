@@ -1,0 +1,35 @@
+{%- extends 'base.html' -%}
+
+{%- block title-%}過去記事を探す - nogisshのブログ{%- endblock -%}
+
+{%- block content -%}
+<div>
+    <div>
+        <h1 class="uk-text-lead">過去記事を探す</h1>
+    </div>
+
+    <div class="uk-padding-small uk-background-default">
+        <h2 style="font-size: 18px;">タグを選択する</h2>
+
+        <div>
+            {%- for tag in tag_list -%}
+            <span style="margin: 8px">
+                <label>
+                    <input type="checkbox" name="tag" value="{{ tag }}" class="uk-checkbox" /> {{ tag }}
+                </label>
+            </span>
+            {%- endfor -%}
+        </div>
+
+        <div class="uk-text-center uk-margin-top">
+            <button type="button" class="uk-button uk-button-default" id="search-button">検索</button>
+        </div>
+    </div>
+
+    <div class="uk-margin-top">
+        <h2 style="font-size: 18px;">該当記事</h2>
+
+        <div id="article_list"></div>
+    </div>
+</div>
+{%- endblock -%}
