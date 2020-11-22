@@ -204,8 +204,6 @@ class SearchManager:
 
 
 if __name__ == '__main__':
-    mkdir_public()
-
     am = ArticleManager()
     im = IndexManager()
     sm = SearchManager()
@@ -215,6 +213,8 @@ if __name__ == '__main__':
         if command == 'new' or command == 'create':
             am.create()
         elif command == 'build':
+            mkdir_public()
+
             am.build_all()
             im.build()
             sm.build()
