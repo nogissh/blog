@@ -1,5 +1,9 @@
 {%- extends './base.html' -%}
 
+{%- block seo -%}
+<meta property="description" content="{{ description }}" />
+{%- endblock -%}
+
 {%- block open_graph -%}
 <meta property="og:site_name" content="nogisshのブログ" />
 <meta property="og:title" content="{{ title }}" />
