@@ -1,5 +1,5 @@
 # Building
-FROM python:3.8-alpine as build-stage
+FROM toshikiohnogi/ubuntu-python:ubuntu20.04-python3.9 as build-stage
 WORKDIR /app
 COPY requirements.txt ./
 RUN pip install --upgrade pip && \
