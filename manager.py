@@ -7,9 +7,7 @@ import json
 
 from markdown import Markdown
 from jinja2 import Environment, FileSystemLoader
-from csscompressor import compress as css_minifier
-from jsmin import jsmin as js_minifier
-from htmlmin import minify as html_minifier
+from minify_html import minify as html_minifier
 
 BASE_URL = os.path.dirname(os.path.abspath(__file__))
 
@@ -31,16 +29,8 @@ def mkdir_static():
         os.mkdir(os.path.join(BASE_URL, 'public', 'static'))
 
 
-def minify_css(css):
-    return css_minifier(css)
-
-
-def minify_js(js):
-    return js_minifier(js, quote_chars="'\"`")
-
-
 def minify_html(html):
-    return html_minifier(html).replace('> <', '><')
+    return html_minifier(html, minify_css=True, minify_js=True)
 
 
 class ArticleManager:
@@ -104,14 +94,14 @@ class ArticleManager:
             css = f.read()
 
         params = {
-            'css': minify_css(css),
+            'css': css,
             'article_content': self.md.convert(script),
         }
 
         params.update(info)
 
-        with open(os.path.join(BASE_URL, 'public', 'articles', dir_name, 'index.html'), 'w', encoding='utf-8') as f:
-            f.write(minify_html(self.template.render(**params)))
+        with open(os.path.join(BASE_URL, self.PUBLIC_ROOT_DIR, 'articles', dir_name, 'index.html'), 'w', encoding='utf-8') as f:
+            f.write(html_minifier(self.template.render(**params), minify_css=True, minify_js=True))
 
     def build_all(self):
         if not os.path.exists(self.PUBLIC_ROOT_DIR):
@@ -126,6 +116,8 @@ class ArticleManager:
 class IndexManager:
     ARTICLES_ROOT_DIR = 'articles'
     PUBLIC_ROOT_DIR = 'public'
+
+    template = Environment(loader=FileSystemLoader(os.path.join(BASE_URL, 'templates'))).get_template('index.html')
 
     def build(self):
         article_list = []
@@ -147,16 +139,17 @@ class IndexManager:
             css = f.read()
 
         params = {
-            'css': minify_css(css),
+            'css': css,
             'article_list': article_list,
         }
 
-        template = Environment(loader=FileSystemLoader('./templates')).get_template('index.html')
-        with open(os.path.join(self.PUBLIC_ROOT_DIR, 'index.html'), 'w', encoding='utf-8') as f:
-            f.write(minify_html(template.render(**params)))
+        with open(os.path.join(BASE_URL, self.PUBLIC_ROOT_DIR, 'index.html'), 'w', encoding='utf-8') as f:
+            f.write(html_minifier(self.template.render(**params), minify_css=True, minify_js=True))
 
 
 class SearchManager:
+    PUBLIC_ROOT_DIR = 'public'
+
     template = Environment(loader=FileSystemLoader(os.path.join(BASE_URL, 'templates'))).get_template('search.html')
 
     def build(self):
@@ -191,19 +184,21 @@ class SearchManager:
             js = f.read()
 
         params = {
-            'css': minify_css(css),
-            'js': minify_js(js),
+            'css': css,
+            'js': js,
             'tag_list': tag_list,
         }
-
-        with open(os.path.join(BASE_URL, 'public', 'search.html'), 'w', encoding='utf-8') as f:
-            f.write(minify_html(self.template.render(**params)))
 
         with open(os.path.join(BASE_URL, 'public', 'static', 'search.json'), 'w', encoding='utf-8') as f:
             json.dump({ 'articles': info_list }, f)
 
+        with open(os.path.join(BASE_URL, self.PUBLIC_ROOT_DIR, 'search.html'), 'w', encoding='utf-8') as f:
+            f.write(html_minifier(self.template.render(**params), minify_css=True, minify_js=True))
+
 
 if __name__ == '__main__':
+    os.system(f'rm -rf {os.path.join(BASE_URL, "public")}')
+
     am = ArticleManager()
     im = IndexManager()
     sm = SearchManager()
