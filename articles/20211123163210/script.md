@@ -12,9 +12,7 @@
 
 - Color: シルバー
 - Display size: 16インチ
-- Chip: M1 Pro
-  - CPU: 10 Core
-  - GPU: 16 Core
+- Chip: M1 Pro (CPU: 10 Core, GPU: 16 Core)
 - Memory: 32GB
 - Storage: 512GB SSD
 - KeyBoard: US
