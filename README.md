@@ -1,3 +1,3 @@
 # Blog
 
-https://blog.toshikiohnogi.net
+https://blog.nogissh.com
