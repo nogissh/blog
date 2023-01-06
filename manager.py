@@ -106,7 +106,7 @@ class ArticleManager:
         params.update(info)
 
         with open(os.path.join(BASE_URL, self.PUBLIC_ROOT_DIR, 'articles', dir_name, 'index.html'), 'w', encoding='utf-8') as f:
-            f.write(html_minifier(self.template.render(**params), minify_css=True, minify_js=True))
+            f.write(html_minifier(self.template.render(**params), minify_css=True, minify_js=True, keep_html_and_head_opening_tags=True))
 
     def build_all(self):
         if not os.path.exists(self.PUBLIC_ROOT_DIR):
@@ -148,7 +148,7 @@ class IndexManager:
         }
 
         with open(os.path.join(BASE_URL, self.PUBLIC_ROOT_DIR, 'index.html'), 'w', encoding='utf-8') as f:
-            f.write(html_minifier(self.template.render(**params), minify_css=True, minify_js=True))
+            f.write(html_minifier(self.template.render(**params), minify_css=True, minify_js=True, keep_html_and_head_opening_tags=True))
 
 
 class SearchManager:
@@ -196,7 +196,7 @@ class SearchManager:
             json.dump({ 'articles': info_list }, f)
 
         with open(os.path.join(BASE_URL, self.PUBLIC_ROOT_DIR, 'search.html'), 'w', encoding='utf-8') as f:
-            f.write(html_minifier(self.template.render(**params), minify_css=True, minify_js=True))
+            f.write(html_minifier(self.template.render(**params), minify_css=True, minify_js=True, keep_html_and_head_opening_tags=True))
 
 
 class ListManager:
@@ -228,7 +228,7 @@ class ListManager:
         }
 
         with open(os.path.join(BASE_URL, self.PUBLIC_ROOT_DIR, 'list.html'), 'w', encoding='utf-8') as f:
-            f.write(html_minifier(self.template.render(**params), minify_css=True, minify_js=True))
+            f.write(html_minifier(self.template.render(**params), minify_css=True, minify_js=True, keep_html_and_head_opening_tags=True))
 
 
 if __name__ == '__main__':
