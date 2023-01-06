@@ -32,3 +32,4 @@ jobs:
         deploy_key: ${{ secrets.MY_DEPLOY_SECRET }}
         publish_branch: gh-pages
         publish_dir: ./public
+        cname: blog.nogissh.com
