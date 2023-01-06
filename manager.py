@@ -29,6 +29,11 @@ def mkdir_static():
         os.mkdir(os.path.join(BASE_URL, 'public', 'static'))
 
 
+def mv_config():
+    mkdir_public()
+    os.system('cp ./configs/* ./public')
+
+
 def minify_html(html):
     return html_minifier(html, minify_css=True, minify_js=True)
 
@@ -245,6 +250,8 @@ if __name__ == '__main__':
             im.build()
             sm.build()
             lm.build()
+
+            mv_config()
         else:
             print('コマンドが不正です。')
     except IndexError:
