@@ -60,7 +60,7 @@ class ArticleManager:
         os.mkdir(os.path.join(self.ARTICLES_ROOT_DIR, dir_name, 'images'))
 
         with open(os.path.join(self.ARTICLES_ROOT_DIR, dir_name, 'script.md'), 'w', encoding='utf-8') as f:
-            f.write("# タイトル\n\nまえがき\n\n## はじめに\n\nhogehoge\n\n## おわりに\n\nhogehoge\n")
+            f.write("## まえがき\n\nまえがき\n\n## はじめに\n\nhogehoge\n\n## おわりに\n\nhogehoge\n")
 
         with open(os.path.join(self.ARTICLES_ROOT_DIR, dir_name, 'info.json'), 'w', encoding='utf-8') as f:
             f.write(json.dumps({
@@ -87,22 +87,20 @@ class ArticleManager:
         with open(os.path.join(BASE_URL, 'articles', dir_name, 'info.json')) as f:
             info = json.load(f)
 
-        with open(os.path.join(BASE_URL, 'articles', dir_name, 'script.md')) as f:
-            script = f.read()
-
         info['tags_as_text'] = ', '.join(info['tags'])
-
         info['formatted_created_at'] = datetime.datetime.fromisoformat(info['created_at']).strftime('%Y年%m月%d日 %H:%M')
         info['formatted_updated_at'] = datetime.datetime.fromisoformat(info['updated_at']).strftime('%Y年%m月%d日 %H:%M')
+
+        with open(os.path.join(BASE_URL, 'articles', dir_name, 'script.md')) as f:
+            script = f.read()
 
         with open(os.path.join(BASE_URL, 'assets', 'css', 'style.css')) as f:
             css = f.read()
 
         params = {
             'css': css,
-            'article_content': self.md.convert(script),
+            'content': self.md.convert(script),
         }
-
         params.update(info)
 
         with open(os.path.join(BASE_URL, self.PUBLIC_ROOT_DIR, 'articles', dir_name, 'index.html'), 'w', encoding='utf-8') as f:

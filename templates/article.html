@@ -29,15 +29,25 @@
 
 {%- block content -%}
 <div>
-    <div class="uk-padding-small uk-background-default">
-        <div class="uk-text-right">
-            <p style="margin-bottom: 3px; font-size: 13px;">更新日: {{ formatted_updated_at }}</p>
+    <article class="article">
+        <div class="uk-text-center uk-margin-top uk-text-lead">
+            <h1>
+                {{ title }}
+            </h1>
+
+            <p class="uk-text-small uk-text-muted">
+                作成日: {{ formatted_created_at }} | 更新日: {{ formatted_updated_at }}
+            </p>
+
+            <div>
+                <img src="images/{{ image }}" alt="" />
+            </div>
         </div>
 
-        <article class="article uk-margin-small-top">
-            {{ article_content }}
-        </article>
-    </div>
+        <div class="uk-background-default uk-padding-small uk-margin-top">
+            {{ content }}
+        </div>
+    </article>
 
     <div class="article_info uk-padding-small uk-margin-top uk-background-default">
         <h1>記事の情報</h1>
