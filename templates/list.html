@@ -1,0 +1,38 @@
+{%- extends 'base.html' -%}
+
+{%- block seo -%}
+<meta name="description" content="書き置き場にある記事の一覧です。" />
+{%- endblock -%}
+
+{%- block title-%}記事一覧 - 書き置き場{%- endblock -%}
+
+{%- block content -%}
+<div>
+    <h1 style="font-size: 22px;">記事一覧</h1>
+
+    {%- for article in article_list -%}
+    <div class="section uk-padding-small uk-background-default uk-margin-bottom">
+        <h2 class="uk-text-lead uk-margin-top">
+            <a href="/articles/{{ article['id'] }}">
+                {{ article['title'] }}
+            </a>
+        </h2>
+
+        <p class="uk-text-small">
+            {{ article['description'] }}
+        </p>
+
+        <div>
+            <span uk-icon="tag" class="uk-margin-small-right"></span>
+            {% for tag in article['tags'] %}
+            <span class="uk-label uk-margin-small-right">{{ tag }}</span>
+            {% endfor %}
+        </div>
+
+        <p class="uk-text-small uk-margin-small">
+            作成日：{{ article['created_date']}}
+        </p>
+    </div>
+    {%- endfor -%}
+</div>
+{%- endblock -%}

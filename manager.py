@@ -194,12 +194,45 @@ class SearchManager:
             f.write(html_minifier(self.template.render(**params), minify_css=True, minify_js=True))
 
 
+class ListManager:
+    ARTICLES_ROOT_DIR = 'articles'
+    PUBLIC_ROOT_DIR = 'public'
+
+    template = Environment(loader=FileSystemLoader(os.path.join(BASE_URL, 'templates'))).get_template('list.html')
+
+    def build(self):
+        mkdir_public()
+
+        dir_name_list = [int(dir_name) for dir_name in os.listdir(self.ARTICLES_ROOT_DIR) if re.match(r'[0-9]{14}', dir_name)]
+        dir_name_list = sorted(dir_name_list, reverse=True)
+        dir_name_list = map(str, dir_name_list)
+
+        article_list = []
+        for dir_name in dir_name_list:
+            with open(os.path.join(self.ARTICLES_ROOT_DIR, dir_name, 'info.json')) as f:
+                info = json.load(f)
+            info['created_date'] = datetime.datetime.fromisoformat(info['created_at']).strftime('%Y年%m月%d日')
+            article_list.append(info)
+
+        with open(os.path.join(BASE_URL, 'assets', 'css', 'style.css')) as f:
+            css = f.read()
+
+        params = {
+            'css': css,
+            'article_list': article_list,
+        }
+
+        with open(os.path.join(BASE_URL, self.PUBLIC_ROOT_DIR, 'list.html'), 'w', encoding='utf-8') as f:
+            f.write(html_minifier(self.template.render(**params), minify_css=True, minify_js=True))
+
+
 if __name__ == '__main__':
     os.system(f'rm -rf {os.path.join(BASE_URL, "public")}')
 
     am = ArticleManager()
     im = IndexManager()
     sm = SearchManager()
+    lm = ListManager()
 
     try:
         command = sys.argv[1]
@@ -211,6 +244,7 @@ if __name__ == '__main__':
             am.build_all()
             im.build()
             sm.build()
+            lm.build()
         else:
             print('コマンドが不正です。')
     except IndexError:
