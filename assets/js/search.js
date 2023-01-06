@@ -50,27 +50,28 @@ $('#search-button').click(function () {
     $('#article_list').empty();
 
     results.forEach(function (v) {
+        let tagElements = v.tags.map(function (t) { return `<span class="uk-label uk-margin-small-right">${ t }</span>` }).join('');
+
         $('#article_list').append(`
             <div class="section uk-padding-small uk-background-default uk-margin-bottom">
-                <p class="uk-text-right" style="margin: 0; font-size: 13px;">
-                    投稿日: ${ v.formatted_created_at }
-                </p>
-
-                <h2 class="uk-text-lead uk-margin-small">
+                <h2 class="uk-text-lead uk-margin-top">
                     <a href="/articles/${ v.id }">
                         ${ v.title}
                     </a>
                 </h2>
 
-                <p>
+                <p class="uk-text-small">
                     ${ v.description }
                 </p>
 
-                <div class="uk-text-center">
-                    <p>
-                        <a href="/articles/${ v.id }">記事を読む</a>
-                    </p>
+                <div>
+                    <span uk-icon="tag" class="uk-margin-small-right"></span>
+                    ${ tagElements }
                 </div>
+
+                <p class="uk-text-small uk-margin-small">
+                    作成日：${ v.created_date }
+                </p>
             </div>
         `);
     });

@@ -11,23 +11,26 @@
     <div>
         {%- for article in article_list -%}
         <div class="section uk-padding-small uk-background-default uk-margin-bottom">
-            <p class="uk-text-right" style="margin: 0; font-size: 13px;">
-                投稿日: {{ article['formatted_created_at']}}
-            </p>
-
-            <h2 class="uk-text-lead uk-margin-small">
+            <h2 class="uk-text-lead uk-margin-top">
                 <a href="/articles/{{ article['id'] }}">
                     {{ article['title'] }}
                 </a>
             </h2>
 
-            <p>{{ article['description'] }}</p>
+            <p class="uk-text-small">
+                {{ article['description'] }}
+            </p>
 
-            <div class="uk-text-center">
-                <p>
-                    <a href="/articles/{{ article['id'] }}">記事を読む</a>
-                </p>
+            <div>
+                <span uk-icon="tag" class="uk-margin-small-right"></span>
+                {% for tag in article['tags'] %}
+                <span class="uk-label uk-margin-small-right">{{ tag }}</span>
+                {% endfor %}
             </div>
+
+            <p class="uk-text-small uk-margin-small">
+                作成日：{{ article['created_date']}}
+            </p>
         </div>
         {%- endfor -%}
     </div>

@@ -130,8 +130,7 @@ class IndexManager:
             with open(os.path.join(self.ARTICLES_ROOT_DIR, dir_name, 'info.json')) as f:
                 info = json.load(f)
 
-            info['formatted_created_at'] = datetime.datetime.fromisoformat(info['created_at']).strftime('%Y年%m月%d日 %H:%M')
-            info['formatted_updated_at'] = datetime.datetime.fromisoformat(info['updated_at']).strftime('%Y年%m月%d日 %H:%M')
+            info['created_date'] = datetime.datetime.fromisoformat(info['created_at']).strftime('%Y年%m月%d日')
 
             article_list.append(info)
 
@@ -168,8 +167,7 @@ class SearchManager:
             with open(os.path.join(BASE_URL, 'articles', dir_name, 'info.json')) as f:
                 info = json.load(f)
 
-            info['formatted_created_at'] = datetime.datetime.fromisoformat(info['created_at']).strftime('%Y年%m月%d日 %H:%M')
-            info['formatted_updated_at'] = datetime.datetime.fromisoformat(info['updated_at']).strftime('%Y年%m月%d日 %H:%M')
+            info['created_date'] = datetime.datetime.fromisoformat(info['created_at']).strftime('%Y年%m月%d日')
 
             info_list.append(info)
 
