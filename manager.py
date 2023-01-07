@@ -34,6 +34,11 @@ def mv_config():
     os.system('cp ./configs/* ./public')
 
 
+def mv_icon():
+    mkdir_static()
+    os.system('cp ./assets/icon/* ./public/static')
+
+
 def minify_html(html):
     return html_minifier(html, minify_css=True, minify_js=True)
 
@@ -250,6 +255,7 @@ if __name__ == '__main__':
             lm.build()
 
             mv_config()
+            mv_icon()
         else:
             print('コマンドが不正です。')
     except IndexError:
