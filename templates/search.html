@@ -11,19 +11,15 @@
     <div class="uk-padding-small uk-background-default">
         <h2 style="font-size: 18px;">タグを選択する</h2>
 
-        <div class="uk-width-expand" style="overflow-wrap: break-word">
+        <p style="overflow-wrap: break-word">
             {%- for tag in tag_list -%}
             <span style="margin: 8px">
                 <label style="white-space: nowrap">
-                    <input type="checkbox" name="tag" value="{{ tag }}" class="uk-checkbox" /> {{ tag }}
+                    <input type="checkbox" name="tag" value="{{ tag }}" class="tag uk-checkbox" /> {{ tag }}
                 </label>
             </span>
             {%- endfor -%}
-        </div>
-
-        <div class="uk-text-center uk-margin-top">
-            <button type="button" class="uk-button uk-button-default" id="search-button">検索</button>
-        </div>
+        </p>
     </div>
 
     <hr />

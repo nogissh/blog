@@ -18,7 +18,7 @@ $(document).ready(function () {
     });
 });
 
-$('#search-button').click(function () {
+$('.tag').click(function () {
     if (state.loading === false) {
         alert('データをローディング中です。');
         return;
@@ -33,7 +33,12 @@ $('#search-button').click(function () {
     });
 
     if (selectedTags.length === 0) {
-        alert('タグを選択してください。');
+        $('#article_list').empty();
+        $('#article_list').append(`
+            <div class="uk-text-center">
+                検索すると記事が表示されます。
+            </div>
+        `);
         return;
     }
 
