@@ -42,15 +42,14 @@ $('.tag').click(function () {
         return;
     }
 
-    let results = [];
-    for (let i = 0; i < state.info.articles.length; i++) {
-        for (let j = 0; j < selectedTags.length; j++) {
-            if (state.info.articles[i].tags.includes(selectedTags[j])) {
-                results.push(state.info.articles[i]);
-                break;
+    let results = state.info.articles.filter(function (article) {
+        for (let i = 0; i < selectedTags.length; i++) {
+            if (!article.tags.includes(selectedTags[i])) {
+                return false;
             }
         }
-    };
+        return true;
+    });
 
     $('#article_list').empty();
 
