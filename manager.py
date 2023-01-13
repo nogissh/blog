@@ -137,9 +137,7 @@ class IndexManager:
         for dir_name in dir_name_list:
             with open(os.path.join(self.ARTICLES_ROOT_DIR, dir_name, 'info.json')) as f:
                 info = json.load(f)
-
             info['created_date'] = datetime.datetime.fromisoformat(info['created_at']).strftime('%Y年%m月%d日')
-
             article_list.append(info)
 
         with open(os.path.join(BASE_URL, 'assets', 'css', 'style.css')) as f:
@@ -174,13 +172,9 @@ class SearchManager:
         for dir_name in dir_name_list:
             with open(os.path.join(BASE_URL, 'articles', dir_name, 'info.json')) as f:
                 info = json.load(f)
-
             info['created_date'] = datetime.datetime.fromisoformat(info['created_at']).strftime('%Y年%m月%d日')
-
             info_list.append(info)
-
             tag_list.extend(info['tags'])
-
         tag_list = list(set(tag_list))
 
         with open(os.path.join(BASE_URL, 'assets', 'css', 'style.css')) as f:
