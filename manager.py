@@ -78,6 +78,24 @@ class ArticleManager:
                 'updated_at': created_dt.isoformat(timespec='seconds'),
             }, indent=4))
 
+    def reset(self, id):
+        cur_dir = os.path.join(self.ARTICLES_ROOT_DIR, id)
+
+        dt = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(seconds=32400)))
+        new_id = dt.strftime('%Y%m%d%H%M%S')
+
+        # info.json
+        with open(os.path.join(cur_dir, 'info.json')) as f:
+            obj = json.load(f)
+        obj['id'] = new_id
+        obj['created_at'] = dt.isoformat(timespec='seconds')
+        obj['updated_at'] = dt.isoformat(timespec='seconds')
+        with open(os.path.join(cur_dir, 'info.json'), 'w') as f:
+            json.dump(obj, f, indent=4)
+
+        # directory
+        os.rename(cur_dir, os.path.join(self.ARTICLES_ROOT_DIR, new_id))
+
     def build(self, dir_name):
         mkdir_articles()
 
@@ -240,6 +258,8 @@ if __name__ == '__main__':
         command = sys.argv[1]
         if command == 'new' or command == 'create':
             am.create()
+        elif command == 'reset':
+            am.reset(sys.argv[2])
         elif command == 'build':
             mkdir_public()
 
