@@ -96,6 +96,15 @@ class ArticleManager:
         # directory
         os.rename(cur_dir, os.path.join(self.ARTICLES_ROOT_DIR, new_id))
 
+    def update(self, id):
+        cur_dir = os.path.join(self.ARTICLES_ROOT_DIR, id)
+        now_df = datetime.datetime.now(tz=datetime.timezone(datetime.timedelta(seconds=32400)))
+        with open(os.path.join(cur_dir, 'info.json')) as f:
+            obj = json.load(f)
+        obj['updated_at'] = now_df.isoformat(timespec='seconds')
+        with open(os.path.join(cur_dir, 'info.json'), 'w') as f:
+            json.dump(obj, f, indent=4)
+
     def build(self, dir_name):
         mkdir_articles()
 
@@ -260,6 +269,8 @@ if __name__ == '__main__':
             am.create()
         elif command == 'reset':
             am.reset(sys.argv[2])
+        elif command == 'update':
+            am.update(sys.argv[2])
         elif command == 'build':
             mkdir_public()
 
