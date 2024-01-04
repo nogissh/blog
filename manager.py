@@ -103,7 +103,7 @@ class ArticleManager:
             obj = json.load(f)
         obj['updated_at'] = now_df.isoformat(timespec='seconds')
         with open(os.path.join(cur_dir, 'info.json'), 'w') as f:
-            json.dump(obj, f, indent=4)
+            json.dump(obj, f, indent=4, ensure_ascii=False)
 
     def build(self, dir_name):
         mkdir_articles()
